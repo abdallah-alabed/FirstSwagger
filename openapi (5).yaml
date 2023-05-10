@@ -1,0 +1,219 @@
+openapi: 3.0.0
+
+info:
+  title: Dummy Json Mock Swagger
+  description: making swagger for the Cart section in the dummy json 
+  version: 0.0.1
+servers:
+  - url: https://dummyjson.com/
+    description: Dummy Api for testing
+paths:
+  /carts:
+    get:
+      tags:
+        - Carts
+      summary: get all carts
+      description: used to get all carts available in the api.
+      operationId: getCarts
+      responses:
+        '200':
+          description: All Carts have been retrieved successfully 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '404':
+          description: ERROR Acessing the carts
+  
+  /carts/add:
+    post:
+      tags:
+        - Add Cart
+      summary: add all carts
+      operationId: addCarts
+      requestBody:
+        description: Optional 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddNewCart'
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: New Cart Was Successfully Created 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddNewCart'
+        '404':
+          description: ERROR Creating a New Cart
+          
+  /cart/{cartId}:
+    put:
+      tags:
+        - Update Cart
+      operationId: UpdateCart
+      parameters:
+        - name: cartId
+          in: path
+          description: cart that need to be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Optional 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCart'
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Cart Was Successfully Updated 
+          content:
+            application/json:
+             schema:
+              $ref: '#/components/schemas/UpdateCart'
+        '404':
+          description: ERROR updating the Cart
+    delete:
+      tags:
+        - delete Cart
+      description: deleting cart method
+      operationId: DeleteCart
+      parameters:
+        - name: cartId
+          in: path
+          description: cart that need to be updated
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cart Was Successfully Deleted 
+        '404':
+          description: ERROR Deleting the Cart
+      
+components:
+  schemas:
+    Cart:
+      type: object 
+      properties:
+        carts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              products: 
+                type: array
+                items: 
+                  type: object
+                  properties: 
+                    "id":
+                      type: integer
+                      example: 59
+                    "title":
+                      type: string
+                      example: "Spring and summershoes"
+                    "price":
+                      type: number
+                      multipleOf: 0.01
+                      example: 20
+                    "quantity":
+                      type: integer
+                      example: 3
+                    "total":
+                      type: number
+                      multipleOf: 0.01
+                      example: 60
+                    "discountPercentage":
+                      type: number
+                      multipleOf: 0.01
+                      example: 8.71
+                    "discountedPrice":
+                      type: number
+                      multipleOf: 0.01
+                      example: 55
+              total:
+                type: integer
+                example: 2328
+              discountedTotal:
+                type: number
+                multipleOf: 0.01
+                example: 8.71
+              userId:
+                type: integer
+                example: 97
+              totalProducts:
+                type: integer
+                example: 5
+              totalQuantity:
+                type: integer
+                example: 10
+        total:
+          type: integer
+          example: 20
+        skip:
+          type: integer
+          example: 0
+        limit:
+          type: integer
+          example: 20
+    AddNewCart:
+      required:
+        - userId
+        - products
+      type: object 
+      properties:
+        userId:
+          type: integer
+          example: 1
+        products:
+          type: array
+          items: 
+            type: object
+            properties:
+              id: 
+                type: integer
+                example: 1
+              quantity:
+                type: integer
+                example: 1
+    UpdateCart:
+      required:
+        - merge
+        - products
+      type: object 
+      properties:
+        merge:
+          type: boolean
+          example: true
+        products:
+          type: array
+          items: 
+            type: object
+            properties:
+              id: 
+                type: integer
+                example: 1
+              quantity:
+                type: integer
+                example: 1
+          
+          
+          
+          
+          
+          
+          
+          
+      
